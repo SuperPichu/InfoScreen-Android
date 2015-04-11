@@ -1,0 +1,13 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="org.superpichu.infoscreen_android.busFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+        android:text="Next Bus in 15 minutes"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:textSize="50dp" />
+
+</FrameLayout>
