@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 
 
-public class busFragment extends Fragment {
+public class BusFragment extends Fragment {
 
 
-    public busFragment() {
+    public BusFragment() {
         // Required empty public constructor
     }
 

@@ -11,17 +11,15 @@ import android.view.ViewGroup;
 import android.widget.VideoView;
 
 
-public class twitchFragment extends Fragment {
+public class TwitchFragment extends Fragment {
     View view;
     VideoView videoView;
-    String playlist;
-    public twitchFragment() {
+    public TwitchFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -29,14 +27,19 @@ public class twitchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_twitch, container, false);
+
+        return view;
+    }
+
+
+    public void updateTwitch(String playlist){
         videoView = (VideoView)view.findViewById(R.id.videoView);
         try {
-            Uri m3u = Uri.parse(new getTwitch().execute("saltybet").get());
+            Uri m3u = Uri.parse(new getTwitch().execute(playlist).get());
             videoView.setVideoURI(m3u);
             videoView.requestFocus();
             videoView.setVisibility(View.VISIBLE);
             videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-
                 public void onPrepared(MediaPlayer mp) {
                     mp.setVolume(0,0);
                     mp.start();
@@ -45,8 +48,6 @@ public class twitchFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return view;
     }
-
 
 }

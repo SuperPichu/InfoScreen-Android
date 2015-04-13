@@ -8,4 +8,5 @@ public class Server {
     String alertBody;
     boolean alertIsActive;
     String twitchChannel;
+    Weather weather;
 }

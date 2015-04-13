@@ -10,7 +10,7 @@
         <fragment
             android:layout_width="545dp"
             android:layout_height="304dp"
-            android:name="org.superpichu.infoscreen_android.twitchFragment"
+            android:name="org.superpichu.infoscreen_android.TwitchFragment"
             android:id="@+id/twitch"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
@@ -28,10 +28,18 @@
         <fragment
             android:layout_width="570dp"
             android:layout_height="150dp"
-            android:name="org.superpichu.infoscreen_android.busFragment"
-            android:id="@+id/fragment"
+            android:name="org.superpichu.infoscreen_android.BusFragment"
+            android:id="@+id/bus"
             tools:layout="@layout/fragment_bus"
             android:layout_gravity="left|bottom" />
+
+        <fragment
+            android:layout_width="417dp"
+            android:layout_height="213dp"
+            android:name="org.superpichu.infoscreen_android.WeatherFragment"
+            android:id="@+id/weather"
+            android:layout_gravity="right|bottom"
+            tools:layout="@layout/fragment_weather" />
     </FrameLayout>
 
 </RelativeLayout>

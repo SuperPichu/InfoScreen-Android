@@ -1,19 +1,40 @@
 package org.superpichu.infoscreen_android;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.VideoView;
+
+import org.json.JSONObject;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MainActivity extends ActionBarActivity {
-
+    Server server;
+    boolean isUpdated;
+    Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        server = new Server();
+        server.twitchChannel = "twitchplayspokemon";
+        Timer updateTimer = new Timer();
+        updateTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                updateServer();
+            }
+        },0,3000);
     }
 
 
@@ -37,5 +58,56 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private void updateServer(){
+        new Thread(serverUpdater).start();
+    }
+
+    final Runnable serverUpdater = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                String old = server.twitchChannel;
+                server = new getServer().execute("").get();
+                isUpdated = (!old.equals(server.twitchChannel));
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (isUpdated) {
+                            TwitchFragment twitchFragment = (TwitchFragment) getFragmentManager().findFragmentById(R.id.twitch);
+                            twitchFragment.updateTwitch(server.twitchChannel);
+                        }
+                        WeatherFragment weatherFragment = (WeatherFragment)getFragmentManager().findFragmentById(R.id.weather);
+                        weatherFragment.updateWeather(server.weather);
+                        if(!server.alertIsActive){
+                            showDialog(server);
+                        }
+                    }
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    private void showDialog(Server server) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(server.alertSender+":");
+        builder.setMessage(server.alertBody);
+        builder.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        dialog = builder.create();
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        if(!dialog.isShowing()) {
+            dialog.show();
+            dialog.getWindow().setAttributes(lp);
+        }
     }
 }
