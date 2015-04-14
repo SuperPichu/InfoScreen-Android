@@ -4,10 +4,11 @@
     tools:context="org.superpichu.infoscreen_android.BusFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="Next Bus in 15 minutes"
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:textSize="50dp" />
 
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:showDividers="beginning|middle|end"
+        android:id="@+id/table"></TableLayout>
 </FrameLayout>

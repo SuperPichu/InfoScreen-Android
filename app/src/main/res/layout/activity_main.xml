@@ -20,17 +20,17 @@
         <fragment
             android:layout_width="416dp"
             android:layout_height="312dp"
-            android:name="org.superpichu.infoscreen_android.EventFragment"
+            android:name="org.superpichu.infoscreen_android.CalendarFragment"
             android:id="@+id/calendar"
             android:layout_gravity="right|top"
             tools:layout="@layout/list" />
 
         <fragment
             android:layout_width="570dp"
-            android:layout_height="150dp"
+            android:layout_height="215dp"
             android:name="org.superpichu.infoscreen_android.BusFragment"
             android:id="@+id/bus"
-            tools:layout="@layout/fragment_bus"
+            tools:layout="@layout/list"
             android:layout_gravity="left|bottom" />
 
         <fragment

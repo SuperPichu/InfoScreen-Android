@@ -3,7 +3,6 @@ package org.superpichu.infoscreen_android;
 import android.os.AsyncTask;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
@@ -11,9 +10,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by chris on 4/13/15.
@@ -35,6 +35,7 @@ public class getServer extends AsyncTask<String, Void, Server> {
             server.alertSender = serverVars.getString("alertSender");
             server.alertIsActive = serverVars.getBoolean("alertIsActive");
             server.weather = getWeather(json);
+            server.buses = getBuses(json);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,5 +66,27 @@ public class getServer extends AsyncTask<String, Void, Server> {
             e.printStackTrace();
         }
         return weather;
+    }
+
+    private ArrayList<Bus> getBuses(JSONObject json){
+        ArrayList<Bus> buses = new ArrayList<Bus>();
+        try{
+            JSONArray array = json.getJSONObject("prediction").getJSONArray("predictionUnit");
+            for(int i = 0;i<array.length();i++){
+                JSONObject jsonObject = array.getJSONObject(i);
+                Bus bus = new Bus();
+                bus.route = jsonObject.getString("route");
+                String timeRaw = jsonObject.getString("time");
+                Date arrival = new SimpleDateFormat("yyyyMMdd HH:mm").parse(timeRaw);
+                //Date current = Calendar.getInstance().getTime();
+                //long time = arrival.getTime()-current.getTime();
+                //time = time/(60000);
+                bus.time = arrival;
+                buses.add(bus);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return buses;
     }
 }

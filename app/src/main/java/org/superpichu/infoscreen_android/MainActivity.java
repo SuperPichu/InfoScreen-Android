@@ -69,14 +69,16 @@ public class MainActivity extends ActionBarActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        WeatherFragment weatherFragment = (WeatherFragment)getFragmentManager().findFragmentById(R.id.weather);
+                        weatherFragment.updateWeather(server.weather);
+                        BusFragment busFragment = (BusFragment)getFragmentManager().findFragmentById(R.id.bus);
+                        busFragment.updateBuses(server.buses);
+                        if(server.alertIsActive){
+                            showDialog(server);
+                        }
                         if (isUpdated) {
                             TwitchFragment twitchFragment = (TwitchFragment) getFragmentManager().findFragmentById(R.id.twitch);
                             twitchFragment.updateTwitch(server.twitchChannel);
-                        }
-                        WeatherFragment weatherFragment = (WeatherFragment)getFragmentManager().findFragmentById(R.id.weather);
-                        weatherFragment.updateWeather(server.weather);
-                        if(server.alertIsActive){
-                            showDialog(server);
                         }
                     }
                 });
