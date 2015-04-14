@@ -3,16 +3,11 @@ package org.superpichu.infoscreen_android;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.VideoView;
-
-import org.json.JSONObject;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -21,6 +16,7 @@ import java.util.TimerTask;
 public class MainActivity extends ActionBarActivity {
     Server server;
     boolean isUpdated;
+    boolean isShowing = false;
     Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +30,7 @@ public class MainActivity extends ActionBarActivity {
             public void run() {
                 updateServer();
             }
-        },0,3000);
+        },0,10000);
     }
 
 
@@ -79,7 +75,7 @@ public class MainActivity extends ActionBarActivity {
                         }
                         WeatherFragment weatherFragment = (WeatherFragment)getFragmentManager().findFragmentById(R.id.weather);
                         weatherFragment.updateWeather(server.weather);
-                        if(!server.alertIsActive){
+                        if(server.alertIsActive){
                             showDialog(server);
                         }
                     }
@@ -98,6 +94,8 @@ public class MainActivity extends ActionBarActivity {
         builder.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
+                new dismissAlert().execute();
+                isShowing = false;
             }
         });
         dialog = builder.create();
@@ -105,9 +103,11 @@ public class MainActivity extends ActionBarActivity {
         lp.copyFrom(dialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        if(!dialog.isShowing()) {
+        if(!isShowing) {
+            isShowing = true;
             dialog.show();
             dialog.getWindow().setAttributes(lp);
+
         }
     }
 }

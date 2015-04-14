@@ -34,8 +34,8 @@
             android:layout_gravity="left|bottom" />
 
         <fragment
-            android:layout_width="417dp"
-            android:layout_height="213dp"
+            android:layout_width="370dp"
+            android:layout_height="193dp"
             android:name="org.superpichu.infoscreen_android.WeatherFragment"
             android:id="@+id/weather"
             android:layout_gravity="right|bottom"
