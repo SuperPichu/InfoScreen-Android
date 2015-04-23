@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="url">http://example.com/getInfo.php</string>
+    <string name="auth">12345</string>
+    <string name="buses">10,20</string>
+</resources>
