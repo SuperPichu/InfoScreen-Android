@@ -1,10 +1,9 @@
 package org.superpichu.infoscreen_android;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +38,12 @@ public class TwitchFragment extends Fragment {
             videoView.setVideoURI(m3u);
             videoView.requestFocus();
             videoView.setVisibility(View.VISIBLE);
+            videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                @Override
+                public boolean onError(MediaPlayer mp, int what, int extra) {
+                    return true;
+                }
+            });
             videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 public void onPrepared(MediaPlayer mp) {
                     mp.setVolume(0,0);

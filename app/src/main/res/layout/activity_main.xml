@@ -7,23 +7,18 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <fragment
-                android:layout_width="545dp"
-                android:layout_height="304dp"
-                android:name="org.superpichu.infoscreen_android.TwitchFragment"
-                android:id="@+id/twitch"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                tools:layout="@layout/fragment_twitch" />
-        </RelativeLayout>
+        <fragment
+            android:layout_width="565dp"
+            android:layout_height="304dp"
+            android:name="org.superpichu.infoscreen_android.TwitchFragment"
+            android:id="@+id/twitch"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            tools:layout="@layout/fragment_twitch" />
 
         <fragment
-            android:layout_width="416dp"
+            android:layout_width="456dp"
             android:layout_height="312dp"
             android:name="org.superpichu.infoscreen_android.CalendarFragment"
             android:id="@+id/calendar"
