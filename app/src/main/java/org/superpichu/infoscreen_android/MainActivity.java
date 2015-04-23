@@ -64,7 +64,11 @@ public class MainActivity extends ActionBarActivity {
         public void run() {
             try {
                 String old = server.twitchChannel;
-                server = new getServer().execute("").get();
+                String url = getResources().getString(R.string.url);
+                String auth = getResources().getString(R.string.auth);
+                String buses = getResources().getString(R.string.buses);
+                url = url + "?auth=" + auth + "&stpid="+buses;
+                server = new getServer().execute(url).get();
                 isUpdated = (!old.equals(server.twitchChannel));
                 runOnUiThread(new Runnable() {
                     @Override
@@ -73,6 +77,8 @@ public class MainActivity extends ActionBarActivity {
                         weatherFragment.updateWeather(server.weather);
                         BusFragment busFragment = (BusFragment)getFragmentManager().findFragmentById(R.id.bus);
                         busFragment.updateBuses(server.buses);
+                        CalendarFragment calendarFragment = (CalendarFragment)getFragmentManager().findFragmentById(R.id.calendar);
+                        calendarFragment.updateCalendar(server.events);
                         if(server.alertIsActive){
                             showDialog(server);
                         }

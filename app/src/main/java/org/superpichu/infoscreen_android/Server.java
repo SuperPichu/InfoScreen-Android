@@ -12,4 +12,5 @@ public class Server {
     String twitchChannel;
     Weather weather;
     ArrayList<Bus> buses;
+    ArrayList<Event> events;
 }

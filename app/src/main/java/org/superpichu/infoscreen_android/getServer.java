@@ -13,6 +13,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -23,7 +25,8 @@ public class getServer extends AsyncTask<String, Void, Server> {
     protected Server doInBackground(String... params) {
         Server server = new Server();
         DefaultHttpClient client = new DefaultHttpClient();
-        HttpGet get = new HttpGet("http://theloganwalker.com/info/getInfo.php");
+        String url = params[0];
+        HttpGet get = new HttpGet(url);
         try {
             HttpResponse response = client.execute(get);
             BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(),"UTF-8"));
@@ -36,6 +39,7 @@ public class getServer extends AsyncTask<String, Void, Server> {
             server.alertIsActive = serverVars.getBoolean("alertIsActive");
             server.weather = getWeather(json);
             server.buses = getBuses(json);
+            server.events = getCalendar(json);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -88,5 +92,36 @@ public class getServer extends AsyncTask<String, Void, Server> {
             e.printStackTrace();
         }
         return buses;
+    }
+
+    private ArrayList<Event> getCalendar(JSONObject json){
+        ArrayList<Event> events = new ArrayList<Event>();
+        try{
+            JSONArray array = json.getJSONObject("calendar").getJSONArray("event");
+            for(int i = 0;i<array.length();i++){
+                JSONObject jsonObject = array.getJSONObject(i);
+                Event event = new Event();
+                event.name = jsonObject.getString("name");
+                event.owner = jsonObject.getString("owner");
+                event.color = jsonObject.getString("color");
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZZZZZ");
+                try {
+                    event.start = format.parse(jsonObject.getString("start"));
+                    event.end = format.parse(jsonObject.getString("end"));
+                    Calendar current = Calendar.getInstance();
+                    if(event.end.after(current.getTime())) {
+                        events.add(event);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        Collections.sort(events);
+        events = new ArrayList<Event>(events.subList(0,20));
+        return events;
     }
 }

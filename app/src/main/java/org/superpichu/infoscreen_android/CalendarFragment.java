@@ -2,9 +2,8 @@ package org.superpichu.infoscreen_android;
 
 import android.app.ListFragment;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 
-import org.superpichu.infoscreen_android.dummy.DummyContent;
+import java.util.ArrayList;
 
 /**
  * A fragment representing a list of Items.
@@ -26,11 +25,13 @@ public class CalendarFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: Change Adapter to display your content
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS));
+
     }
 
-
+    public void updateCalendar(ArrayList<Event> events){
+        CalendarAdapter adapter = new CalendarAdapter(getActivity(),events);
+        adapter.notifyDataSetChanged();
+        setListAdapter(adapter);
+    }
 
 }

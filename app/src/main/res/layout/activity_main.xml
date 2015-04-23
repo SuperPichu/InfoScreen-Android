@@ -7,15 +7,20 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <fragment
-            android:layout_width="545dp"
-            android:layout_height="304dp"
-            android:name="org.superpichu.infoscreen_android.TwitchFragment"
-            android:id="@+id/twitch"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            tools:layout="@layout/fragment_twitch" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <fragment
+                android:layout_width="545dp"
+                android:layout_height="304dp"
+                android:name="org.superpichu.infoscreen_android.TwitchFragment"
+                android:id="@+id/twitch"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                tools:layout="@layout/fragment_twitch" />
+        </RelativeLayout>
 
         <fragment
             android:layout_width="416dp"
@@ -26,16 +31,16 @@
             tools:layout="@layout/list" />
 
         <fragment
-            android:layout_width="570dp"
-            android:layout_height="215dp"
+            android:layout_width="273dp"
+            android:layout_height="223dp"
             android:name="org.superpichu.infoscreen_android.BusFragment"
             android:id="@+id/bus"
             tools:layout="@layout/list"
             android:layout_gravity="left|bottom" />
 
         <fragment
-            android:layout_width="370dp"
-            android:layout_height="193dp"
+            android:layout_width="381dp"
+            android:layout_height="189dp"
             android:name="org.superpichu.infoscreen_android.WeatherFragment"
             android:id="@+id/weather"
             android:layout_gravity="right|bottom"
