@@ -113,7 +113,6 @@ public class getServer extends AsyncTask<String, Void, Server> {
                         events.add(event);
                     }
                 }catch (Exception e){
-                    e.printStackTrace();
                 }
 
             }

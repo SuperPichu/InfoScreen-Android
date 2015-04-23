@@ -17,6 +17,7 @@ public class MainActivity extends ActionBarActivity {
     Server server;
     boolean isUpdated;
     boolean isShowing = false;
+    boolean firstRun = true;
     Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +83,10 @@ public class MainActivity extends ActionBarActivity {
                         if(server.alertIsActive){
                             showDialog(server);
                         }
-                        if (isUpdated) {
+                        if (isUpdated || firstRun) {
                             TwitchFragment twitchFragment = (TwitchFragment) getFragmentManager().findFragmentById(R.id.twitch);
                             twitchFragment.updateTwitch(server.twitchChannel);
+                            firstRun = false;
                         }
                     }
                 });
